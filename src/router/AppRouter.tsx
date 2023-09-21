@@ -11,11 +11,11 @@ export const AppRouter = () => {
     return (
         <Routes>
             {/* captura de imagen */}
-            <Route path="/captureView" element={<CaptureView />} />
+            <Route path="/admin" element={<CaptureView />} />
             {/* vista la imagen del cliente */}
-            <Route path="/imagenView" element={<ImageView />} />
+            <Route path="/" element={<ImageView />} />
             {/*  */}
-            <Route path="/*" element={<Navigate to={"/dashboardView"} />} />
+            <Route path="/*" element={<Navigate to={"/"} />} />
         </Routes>
     )
 }
