@@ -1,17 +1,17 @@
-import { ComponentImage } from "@/components"
+// import { ComponentImage } from "@/components"
 import noimage from "@/assets/images/no-image.webp";
 import { FormImageModel, FormImageValidations } from "@/models";
-import { isFile } from "@/helpers";
-import { Button, DialogActions, DialogContent, Grid } from "@mui/material";
-import { useForm } from "@/hooks";
+import { Button, Grid } from "@mui/material";
+import { useForm, useImageStore } from "@/hooks";
 import { useState } from "react";
 import './styles.css';
+import { ComponentImage } from "@/components/Image";
 
 const formFields: FormImageModel = {
-    photo: null
+    photo: ''
 };
 const formValidations: FormImageValidations = {
-    photo: [(value) => isFile("image/jpeg, image/png, image/gif", value), 'Debe seleccionar una imagen'],
+    photo: [(value: any) => value.length >= 1, 'Debe ingresar el nombre'],
 };
 
 export const CaptureView = () => {
@@ -21,38 +21,35 @@ export const CaptureView = () => {
     const [formSubmitted, setFormSubmitted] = useState(false);
     const {
         photo,
-        onInputChange, onFileChange, isFormValid, onResetForm,
+        onImage64Change, isFormValid, onResetForm,
         photoValid } = useForm(formFields, formValidations);
-    const sendSubmit = (event: any) => {
-        event.preventDefault();
-        setFormSubmitted(true);
-        if (!isFormValid) return;
-        var bodyFormData = new FormData();
-        bodyFormData.append('photo', photo);
-        // postCreatePropertie(bodyFormData);
-        onResetForm();
+    const { postSendImage } = useImageStore();
+    const sendSubmit = () => {
+        // event.preventDefault();
+        // setFormSubmitted(true);
+        // if (!isFormValid) return;
+        postSendImage({ photo });
     }
     return (
         <>
-            <div className="centered-form">
-                <form onSubmit={sendSubmit}>
-                    <Grid container>
-                        <Grid item xs={12} sm={6} sx={{ padding: '5px' }}>
-                            <ComponentImage
-                                onChange={(file: File) => {
-                                    onFileChange("photo", file);
-                                    setNewImage(URL.createObjectURL(file))
-                                }}
-                                fileImage={newImage}
-                                accept={"image/png, image/gif, image/jpeg"}
-                                error={!!photoValid && formSubmitted}
-                                helperText={formSubmitted ? photoValid : ''}
-                            />
-                        </Grid>
+            {/* <div className="centered-form"> */}
+            <form>
+                <Grid container>
+                    <Grid item xs={12} sm={6} sx={{ padding: '5px' }}>
+                        <ComponentImage
+                            onChange={(file: string) => {
+                                onImage64Change('photo', file);
+                                // setNewImage(URL.createObjectURL(file))
+                            }}
+                            fileImage={newImage}
+                            error={!!photoValid && formSubmitted}
+                            helperText={formSubmitted ? photoValid : ''}
+                        />
                     </Grid>
-                    <Button type="submit">{'ENVIAR'}</Button>
-                </form>
-            </div>
+                </Grid>
+            </form>
+            <Button onClick={sendSubmit} type="submit">{'ENVIAsdR'}</Button>
+            {/* </div> */}
         </>
     )
 }

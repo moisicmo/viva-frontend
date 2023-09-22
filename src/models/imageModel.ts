@@ -1,9 +1,9 @@
 /* FORM PROPERTIE MODEL */
 export interface FormImageModel {
-    photo: File | null;
+    photo: string | null;
 }
 
 /*FORM PROPERTIE MODEL VALIDATIONS */
 export interface FormImageValidations {
-    photo: [(value: File) => boolean, string];
+    photo: [(value: string) => boolean, string];
 }

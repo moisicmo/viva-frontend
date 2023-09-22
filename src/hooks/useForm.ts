@@ -26,7 +26,7 @@ export const useForm = (initialForm: any = {}, formValidations: any = {}) => {
 
 
     const onInputChange = ({ target }: { target: any }, uppercase = false, onlynumber = false) => {
-
+        console.log(target)
         const { name, value } = target;
         if (onlynumber) {
             const regex = /^[0-9\b]+$/;
@@ -35,12 +35,19 @@ export const useForm = (initialForm: any = {}, formValidations: any = {}) => {
                 [name]: regex.test(value) ? value : ""
             })
         }
+
         setFormState({
             ...formState,
             [name]: uppercase ? value.toUpperCase() : value
         })
     }
 
+    const onImage64Change = (name: string, file: string) => {
+        setFormState({
+            ...formState,
+            [name]: file
+        })
+    }
     const onFileChange = (name: string, file: File) => {
         setFormState({
             ...formState,
@@ -72,6 +79,7 @@ export const useForm = (initialForm: any = {}, formValidations: any = {}) => {
         formState,
         onInputChange,
         onFileChange,
+        onImage64Change,
         onResetForm,
 
         ...formValidation,

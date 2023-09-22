@@ -18,4 +18,4 @@ const createAxiosInstance = (baseURL: string) => {
     return instance;
 };
 
-export const coffeApiLeandro = createAxiosInstance(VITE_HOST);
+export const coffeApi = createAxiosInstance(VITE_HOST);
