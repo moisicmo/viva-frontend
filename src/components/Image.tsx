@@ -1,5 +1,5 @@
 import { CameraAltTwoTone, Cameraswitch } from "@mui/icons-material";
-import { Button, Card, IconButton } from "@mui/material";
+import { Button, Card, CardMedia, IconButton } from "@mui/material";
 import { useCallback, useRef, useState } from "react";
 import Webcam from "react-webcam";
 
@@ -10,6 +10,8 @@ export const ComponentImage = (props: any) => {
         helperText,
         reloadCamera,
         isImage,
+        height,
+        width,
     } = props;
 
     const webcamRef = useRef<any>(null);
@@ -22,8 +24,8 @@ export const ComponentImage = (props: any) => {
     };
 
     const videoConstraints = {
-        width: 420,
-        height: 420,
+        height: width > height ? height - 250 : width - 50,
+        width: width > height ? height - 120 : width - 120,
         facingMode: facingMode,
     };
 
@@ -33,17 +35,22 @@ export const ComponentImage = (props: any) => {
     }, [webcamRef, onChange]);
 
     const cardStyle: React.CSSProperties = {
-        position: 'relative',
-        height: 420,
-        width: 420,
-        borderRadius: '10%',
+        height: width > height ? height - 250 : width - 50,
+        width: width > height ? height - 20 : width - 20,
+        borderRadius: '5%',
         borderColor: error ? 'red' : 'initial',
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+    };
+
+    const buttonsContainerStyle: React.CSSProperties = {
+        display: 'flex',
+        justifyContent: 'space-between',
+        padding: '10px',
     };
 
     const iconButtonStyle: React.CSSProperties = {
-        position: 'absolute',
-        bottom: 5,
-        right: 5,
         backgroundColor: 'white',
         borderRadius: '50%',
     };
@@ -53,44 +60,45 @@ export const ComponentImage = (props: any) => {
         fontSize: '2.5rem',
     };
 
-    const toggleButtonStyle: React.CSSProperties = {
-        position: 'absolute',
-        bottom: 5,
-        left: 5,
-        backgroundColor: 'white',
-        borderRadius: '50%',
+    const videoStyle: React.CSSProperties = {
+        transform: facingMode === "user" ? "scaleX(-1)" : "scaleX(1)",
+    };
+
+    const mediaStyle: React.CSSProperties = {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
     };
 
     return (
         <>
-            <Card
-                style={cardStyle}
-                sx={{ display: 'flex', justifyContent: 'center' }}
-            >
-                {isImage === null ? (
-                    <>
-                        <Webcam
-                            audio={false}
-                            mirrored={true}
-                            ref={webcamRef}
-                            screenshotFormat="image/jpeg"
-                            videoConstraints={videoConstraints}
-                        />
-                        <IconButton style={iconButtonStyle} onClick={capture}>
-                            <CameraAltTwoTone style={iconStyle} />
-                        </IconButton>
-                    </>
-                ) : (
-                    <>
-                        <img src={isImage} alt="screenshot" />
-                        <Button style={iconButtonStyle} onClick={() => reloadCamera()}>
-                            {'REINTENTAR'}
-                        </Button>
-                    </>
-                )}
-                <IconButton style={toggleButtonStyle} onClick={toggleCamera}>
+            <div style={buttonsContainerStyle}>
+                <IconButton style={iconButtonStyle} onClick={toggleCamera}>
                     <Cameraswitch style={iconStyle} />
                 </IconButton>
+                {isImage === null ? (
+                    <IconButton style={iconButtonStyle} onClick={capture}>
+                        <CameraAltTwoTone style={iconStyle} />
+                    </IconButton>
+                ) : (
+                    <Button style={iconButtonStyle} onClick={() => reloadCamera()}>
+                        {'REINTENTAsR'}
+                    </Button>
+                )}
+            </div>
+            <Card style={cardStyle}>
+                {isImage === null ? (
+                    <Webcam
+                        audio={false}
+                        mirrored={false}
+                        ref={webcamRef}
+                        screenshotFormat="image/jpeg"
+                        videoConstraints={videoConstraints}
+                        style={videoStyle}
+                    />
+                ) : (
+                    <CardMedia component="img" image={isImage} style={mediaStyle} />
+                )}
             </Card>
             {error && <div style={{ color: 'red' }}>{helperText}</div>}
         </>

@@ -1,6 +1,0 @@
-.centered-form {
-    display: grid;
-    place-items: center;
-    height: 50vh;
-    /* Ajusta la altura para que el formulario se centre verticalmente en la pantalla */
-}

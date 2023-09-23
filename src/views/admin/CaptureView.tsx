@@ -1,10 +1,8 @@
 import { FormImageModel, FormImageValidations } from "@/models";
-import { Grid } from "@mui/material";
 import { useForm, useImageStore } from "@/hooks";
 import { ComponentImage } from "@/components/Image";
 import { ComponentButton } from "@/components";
-import './styles.css';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const formFields: FormImageModel = {
     photo: ''
@@ -14,49 +12,74 @@ const formValidations: FormImageValidations = {
 };
 
 export const CaptureView = () => {
-
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [imageCapture, setImageCapture] = useState<any>(null);
     const {
         photo,
-        onImage64Change, isFormValid, photoValid } = useForm(formFields, formValidations);
+        onImage64Change,
+        isFormValid,
+        photoValid
+    } = useForm(formFields, formValidations);
     const { postSendImage } = useImageStore();
+
     const sendSubmit = (event: any) => {
         event.preventDefault();
         setFormSubmitted(true);
         if (!isFormValid) return;
         postSendImage({ photo }).then(() => setImageCapture(null))
-    }
-    return (
-        <>
-            <div className="centered-form">
-                <form>
-                    <Grid container>
-                        <Grid item xs={12} sm={6} sx={{ padding: '5px' }}>
-                            <ComponentImage
-                                onChange={(file: string) => {
-                                    onImage64Change('photo', file);
-                                    setImageCapture(file);
-                                }}
-                                error={!!photoValid && formSubmitted}
-                                helperText={formSubmitted ? photoValid : ''}
-                                isImage={imageCapture}
-                                reloadCamera={() => setImageCapture(null)}
-                            />
-                        </Grid>
-                    </Grid>
-                    {
-                        imageCapture &&
-                        <ComponentButton
-                            type="button"
-                            onClick={sendSubmit}
-                            text="ENVIAR"
-                            width={400}
-                        />
-                    }
-                </form>
-            </div>
+    };
 
-        </>
-    )
+    const [screenHeight, setScreenHeight] = useState(window.innerHeight);
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setScreenHeight(window.innerHeight);
+            setScreenWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+    const [formularioHeight, setFormularioHeight] = useState(0);
+
+    useEffect(() => {
+        // Obtén la altura real del formulario después de que se renderice
+        const formElement = document.querySelector("form");
+        if (formElement) {
+            const height = formElement.clientHeight;
+            setFormularioHeight(height);
+        }
+    }, []); // Se ejecuta solo una vez después del montaje del componente
+
+    return (
+        <div style={{ display: 'flex', justifyContent: 'center', height: `${screenHeight}px`, width: `${screenWidth}px` }}>
+            <form style={{ marginTop: `${(screenHeight - formularioHeight) / 14}px` }}>
+                <ComponentImage
+                    onChange={(file: string) => {
+                        onImage64Change('photo', file);
+                        setImageCapture(file);
+                    }}
+                    error={!!photoValid && formSubmitted}
+                    helperText={formSubmitted ? photoValid : ''}
+                    isImage={imageCapture}
+                    reloadCamera={() => setImageCapture(null)}
+                    height={screenHeight}
+                    width={screenWidth}
+                />
+                {imageCapture && (
+                    <ComponentButton
+                        type="button"
+                        onClick={sendSubmit}
+                        text="ENVIAR"
+                        width={screenWidth > screenHeight ? screenHeight - 140 : screenWidth - 140}
+                    />
+                )}
+            </form>
+        </div>
+
+    );
 }
