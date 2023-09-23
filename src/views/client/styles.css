@@ -173,3 +173,39 @@ button i.fas {
 #app.opened~#init {
     z-index: -1;
 }
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container-image {
+    position: relative;
+    text-align: center;
+    bottom: 300px;
+    padding-bottom: 20px;
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.button-download {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    z-index: 1; /* Asegura que el botón esté por encima de la imagen */
+}
+
+.container-image img {
+    max-width: 100%;
+    max-height: 300px; /* Ajusta la altura máxima de la imagen según tus necesidades */
+}
