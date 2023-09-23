@@ -1,9 +1,6 @@
 import { coffeApi } from "@/services";
-<<<<<<< Updated upstream
 import Swal from "sweetalert2";
-=======
 import { Buffer } from 'buffer';
->>>>>>> Stashed changes
 
 export const useImageStore = () => {
 
@@ -19,8 +16,6 @@ export const useImageStore = () => {
         return true;
     }
 
-<<<<<<< Updated upstream
-=======
     const getImage = async (image_id:string) => {
         const response  = await coffeApi.get(`/image/photo/${image_id}`, {
             responseType: 'arraybuffer',
@@ -31,7 +26,6 @@ export const useImageStore = () => {
     }
 
 
->>>>>>> Stashed changes
     return {
         //* Métodos
         postSendImage,
