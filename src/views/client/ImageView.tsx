@@ -5,7 +5,7 @@ import { useRef, useState } from 'react';
 import { IconButton } from '@mui/material';
 import { Download, Search } from '@mui/icons-material';
 import logo from '@/assets/images/viva.png';
-import vivaInfinitum from '@/assets/images/viva-infinitum.png';
+import vivaInfinitum from '@/assets/images/viva-infinitum.webp';
 
 export const ImageView = () => {
   const appRef = useRef<HTMLDivElement | null>(null);

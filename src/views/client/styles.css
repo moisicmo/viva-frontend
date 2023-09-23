@@ -194,8 +194,10 @@ button i.fas {
 }
 
 .image-container {
-    position: relative;
-    display: inline-block;
+    /* position: relative;
+    display: inline-block; */
+    display: block;
+    margin: 0 auto;
 }
 
 .button-download {
@@ -261,11 +263,13 @@ button i.fas {
     }
 
     #logo-footer {
-      margin-top: 10px;
+        width: 60%;
+        /* margin-top: 100px !important; */
+        margin: 0 auto;
     }
 
     #logo-image {
         padding-top: 20px;
-        width: 60%;
+        width: 50%;
     }
   }
