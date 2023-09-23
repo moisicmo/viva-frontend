@@ -16,14 +16,19 @@ export const useImageStore = () => {
         return true;
     }
 
-    const getImage = async (image_id:string) => {
-        if(image_id === null) return '';
-        const response  = await coffeApi.patch(`/image/photo/${image_id}`, {}, {
-            responseType: 'arraybuffer',
-        });
-        const base64Image = Buffer.from(response.data, 'binary').toString('base64');
-        const objectURL = `data:image/jpeg;base64,${base64Image}`;
-        return objectURL;
+    const getImage = async (image_id: string) => {
+        try {
+            if (image_id === null) return '';
+            const response = await coffeApi.patch(`/image/photo/${image_id}`, {}, {
+                responseType: 'arraybuffer',
+            });
+            const base64Image = Buffer.from(response.data, 'binary').toString('base64');
+            const objectURL = `data:image/jpeg;base64,${base64Image}`;
+            return objectURL;
+        } catch (error) {
+            Swal.fire('Oops no logramos encontrar tu imagen', '', 'error');
+            return '';
+        }
     }
 
 

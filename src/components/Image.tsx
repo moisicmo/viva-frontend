@@ -24,8 +24,8 @@ export const ComponentImage = (props: any) => {
     };
 
     const videoConstraints = {
-        height: width > height ? height - 250 : width - 50,
-        width: width > height ? height - 120 : width - 120,
+        height: width > height ? height - 150 : width - 50,
+        width: width > height ? height - 20 : width - 20,
         facingMode: facingMode,
     };
 
@@ -35,7 +35,7 @@ export const ComponentImage = (props: any) => {
     }, [webcamRef, onChange]);
 
     const cardStyle: React.CSSProperties = {
-        height: width > height ? height - 250 : width - 50,
+        height: width > height ? height - 150 : width - 50,
         width: width > height ? height - 20 : width - 20,
         borderRadius: '5%',
         borderColor: error ? 'red' : 'initial',
@@ -56,7 +56,7 @@ export const ComponentImage = (props: any) => {
     };
 
     const iconStyle: React.CSSProperties = {
-        color: error ? 'red' : 'blue',
+        color: error ? 'red' : 'black',
         fontSize: '2.5rem',
     };
 
@@ -72,20 +72,6 @@ export const ComponentImage = (props: any) => {
 
     return (
         <>
-            <div style={buttonsContainerStyle}>
-                <IconButton style={iconButtonStyle} onClick={toggleCamera}>
-                    <Cameraswitch style={iconStyle} />
-                </IconButton>
-                {isImage === null ? (
-                    <IconButton style={iconButtonStyle} onClick={capture}>
-                        <CameraAltTwoTone style={iconStyle} />
-                    </IconButton>
-                ) : (
-                    <Button style={iconButtonStyle} onClick={() => reloadCamera()}>
-                        {'REINTENTAsR'}
-                    </Button>
-                )}
-            </div>
             <Card style={cardStyle}>
                 {isImage === null ? (
                     <Webcam
@@ -100,6 +86,21 @@ export const ComponentImage = (props: any) => {
                     <CardMedia component="img" image={isImage} style={mediaStyle} />
                 )}
             </Card>
+            <div style={buttonsContainerStyle}>
+                <IconButton style={iconButtonStyle} onClick={toggleCamera}>
+                    <Cameraswitch style={iconStyle} />
+                </IconButton>
+                {isImage === null ? (
+                    <IconButton style={iconButtonStyle} onClick={capture}>
+                        <CameraAltTwoTone style={iconStyle} />
+                    </IconButton>
+                ) : (
+                    <Button style={iconButtonStyle} onClick={() => reloadCamera()}>
+                        {'REINTENTAR'}
+                    </Button>
+                )}
+            </div>
+
             {error && <div style={{ color: 'red' }}>{helperText}</div>}
         </>
     );

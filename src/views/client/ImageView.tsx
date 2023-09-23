@@ -19,6 +19,7 @@ export const ImageView = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const toggleApp = () => {
+    console.log(appRef)
     if (appRef.current) {
       appRef.current.classList.toggle('opened');
     }
@@ -65,14 +66,12 @@ export const ImageView = () => {
     event.preventDefault();
     if (inputRef.current!.value) {
       const imageData = await getImage(inputRef.current!.value);
-      setImage(imageData);
+      if (imageData != '') setImage(imageData);
     }
   }
   const iconButtonStyle: React.CSSProperties = {
     position: 'absolute',
-    bottom: 5,
-    right: 5,
-    backgroundColor: '#d3f074',
+    backgroundColor: '#c2eb3b',
     color: 'white',
     fontWeight: 'bold',
     borderRadius: '50%',
@@ -81,7 +80,7 @@ export const ImageView = () => {
     marginTop: 22.8
   };
 
-  const handleDownload = (event: any) => {
+  const handleDownload = () => {
     const link = document.createElement('a');
     link.href = image!;
     link.download = 'tu_imagen.jpg'; // Nombre que tendrá el archivo descargado
@@ -100,9 +99,20 @@ export const ImageView = () => {
     <>
       <div id="app-cover">
         <div id="app" ref={appRef}>
+          {image !== null && (
+            <>
+              <img src={image} alt="Imagen" className="image" />
+              <IconButton onClick={handleDownload} size="small" className="button-download">
+                <Download fontSize="large" />
+              </IconButton>
+            </>
+          )}
           <form onSubmit={handleSubmited}>
+
             <div id="f-element">
+
               <div id="inp-cover">
+
                 <input
                   type="text"
                   name="query"
@@ -114,30 +124,28 @@ export const ImageView = () => {
                 />
               </div>
             </div>
-            <div className="container">
-              <div className="container-image">
-                {image !== null && (
-                  <div className="image-container">
-                    <img src={image} alt="Imagen" className="image"/>
-                    <IconButton onClick={handleDownload} size="small" className="button-download">
-                      <Download fontSize="large"/>
-                    </IconButton>
-                  </div>
-                )}
-              </div>
+            <div >
               <IconButton type="submit" style={iconButtonStyle} size='small'>
-                <Search fontSize='medium'/>
+                <Search fontSize='medium' />
               </IconButton>
             </div>
           </form>
-          <div className='img-container'>
-            <img src={vivaInfinitum} id="logo-footer" alt="Logo" />
-          </div>
         </div>
         <div id="layer" title="Click the blue area to hide the form" ref={layerRef}></div>
-        <div id="init" onClick={toggleApp}></div>
+        <div
+          id="init"
+          onClick={toggleApp}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Search fontSize='large' style={{ color: 'white' }} />
+        </div>
       </div>
       <img src={logo} id="logo-image" alt="Logo" />
+      <img src={vivaInfinitum} id="logo-footer" alt="Logo" />
     </>
   );
 };

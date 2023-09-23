@@ -3,6 +3,7 @@ import { useForm, useImageStore } from "@/hooks";
 import { ComponentImage } from "@/components/Image";
 import { ComponentButton } from "@/components";
 import { useEffect, useState } from "react";
+import { CircularProgress } from "@mui/material";
 
 const formFields: FormImageModel = {
     photo: ''
@@ -13,6 +14,7 @@ const formValidations: FormImageValidations = {
 
 export const CaptureView = () => {
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [stateLoad, setStateLoad] = useState(false);
     const [imageCapture, setImageCapture] = useState<any>(null);
     const {
         photo,
@@ -26,7 +28,11 @@ export const CaptureView = () => {
         event.preventDefault();
         setFormSubmitted(true);
         if (!isFormValid) return;
-        postSendImage({ photo }).then(() => setImageCapture(null))
+        setStateLoad(true);
+        postSendImage({ photo }).finally(() => {
+            setImageCapture(null)
+            setStateLoad(false)
+        })
     };
 
     const [screenHeight, setScreenHeight] = useState(window.innerHeight);
@@ -47,13 +53,12 @@ export const CaptureView = () => {
     const [formularioHeight, setFormularioHeight] = useState(0);
 
     useEffect(() => {
-        // Obtén la altura real del formulario después de que se renderice
         const formElement = document.querySelector("form");
         if (formElement) {
             const height = formElement.clientHeight;
             setFormularioHeight(height);
         }
-    }, []); // Se ejecuta solo una vez después del montaje del componente
+    }, []);
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center', height: `${screenHeight}px`, width: `${screenWidth}px` }}>
@@ -70,14 +75,16 @@ export const CaptureView = () => {
                     height={screenHeight}
                     width={screenWidth}
                 />
-                {imageCapture && (
-                    <ComponentButton
-                        type="button"
-                        onClick={sendSubmit}
-                        text="ENVIAR"
-                        width={screenWidth > screenHeight ? screenHeight - 140 : screenWidth - 140}
-                    />
-                )}
+                {
+                    imageCapture && stateLoad ? <CircularProgress color="primary" /> : (
+                        <ComponentButton
+                            type="button"
+                            onClick={sendSubmit}
+                            text="ENVIAR"
+                            width={screenWidth > screenHeight ? screenHeight - 140 : screenWidth - 140}
+                        />
+                    )
+                }
             </form>
         </div>
 
