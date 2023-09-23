@@ -3,7 +3,7 @@ import { useImageStore } from '@/hooks';
 import './styles.css';
 import { useRef, useState } from 'react';
 import { IconButton } from '@mui/material';
-import { Search } from '@mui/icons-material';
+import { Download, Search } from '@mui/icons-material';
 import logo from '@/assets/images/viva.png';
 import vivaInfinitum from '@/assets/images/viva-infinitum.png';
 
@@ -16,6 +16,7 @@ export const ImageView = () => {
 
   const { getImage } = useImageStore();
   const [image, setImage] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const toggleApp = () => {
     if (appRef.current) {
@@ -71,12 +72,32 @@ export const ImageView = () => {
     position: 'absolute',
     bottom: 5,
     right: 5,
-    backgroundColor: 'white',
+    backgroundColor: '#d3f074',
+    color: 'white',
+    fontWeight: 'bold',
     borderRadius: '50%',
+    width: '60px',
+    height: '60px',
+    marginTop: 22.8
   };
+
+  const handleDownload = (event: any) => {
+    const link = document.createElement('a');
+    link.href = image!;
+    link.download = 'tu_imagen.jpg'; // Nombre que tendrá el archivo descargado
+    link.click();
+  };
+
+  const handleInputChange = (e: any) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    if (value === '') {
+      setImage(null);
+    }
+  };
+
   return (
     <>
-
       <div id="app-cover">
         <div id="app" ref={appRef}>
           <form onSubmit={handleSubmited}>
@@ -85,9 +106,11 @@ export const ImageView = () => {
                 <input
                   type="text"
                   name="query"
+                  value={searchQuery}
                   placeholder="Ingresa el código de tu foto"
                   autoComplete="off"
                   ref={inputRef}
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -95,22 +118,26 @@ export const ImageView = () => {
               <div className="container-image">
                 {image !== null && (
                   <div className="image-container">
-                    <img src={image} alt="Imagen" />
-                    <button className="button-download"></button>
+                    <img src={image} alt="Imagen" className="image"/>
+                    <IconButton onClick={handleDownload} size="small" className="button-download">
+                      <Download fontSize="large"/>
+                    </IconButton>
                   </div>
                 )}
               </div>
-              <IconButton type="submit" style={iconButtonStyle}>
-                <Search />
+              <IconButton type="submit" style={iconButtonStyle} size='small'>
+                <Search fontSize='medium'/>
               </IconButton>
             </div>
           </form>
+          <div className='img-container'>
+            <img src={vivaInfinitum} id="logo-footer" alt="Logo" />
+          </div>
         </div>
         <div id="layer" title="Click the blue area to hide the form" ref={layerRef}></div>
         <div id="init" onClick={toggleApp}></div>
       </div>
       <img src={logo} id="logo-image" alt="Logo" />
-      <img src={vivaInfinitum} id="logo-footer" alt="Logo" />
     </>
   );
 };
