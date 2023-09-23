@@ -1,19 +1,19 @@
-// import { useDispatch, useSelector } from 'react-redux';
-// import { cafeApi } from './../services';
-// import { setCarrers } from '../store/user/userSlices';
-
 import { coffeApi } from "@/services";
+import Swal from "sweetalert2";
 
 export const useImageStore = () => {
 
-    // const dispatch = useDispatch();
 
     const postSendImage = async (body: object) => {
-        const { data } = await coffeApi.post('/send/', body);
-        console.log(data)
-        // dispatch(setCarrers({ carrers: data.carreras }));
+        try {
+            const { data } = await coffeApi.post('/image', body);
+            console.log(data)
+            Swal.fire(`Genial! tu código es: ${data.codeImage}`, 'La imagen se envió', 'success');
+        } catch (error) {
+            Swal.fire('Oops ocurrio algo', '', 'error');
+        }
+        return true;
     }
-
 
     return {
         //* Métodos
