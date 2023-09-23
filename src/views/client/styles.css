@@ -26,7 +26,7 @@ input:active {
 
 #app-cover {
     position: absolute;
-    top: 50%;
+    top: 60%;
     right: 0;
     left: 0;
     width: 434px;
@@ -41,6 +41,7 @@ input:active {
     margin: 0 auto;
     transition: 0.15s ease width;
     z-index: 2;
+    margin-top: 40px;
 }
 
 form {
@@ -58,6 +59,7 @@ form {
     left: 0;
     overflow: hidden;
     border-radius: 120px;
+    margin-top: 25px;
 }
 
 #inp-cover {
@@ -75,9 +77,9 @@ input {
     width: 100%;
     font-size: 19px;
     font-family: Arial, Helvetica, sans-serif;
-    /* color: #c2eb3b; */
+    /* color: #d3f074; */
     border: 0;
-    padding: 30px 0;
+    padding: 20px 0;
     margin: 0;
     margin-top: 52px;
     line-height: 1;
@@ -113,12 +115,12 @@ button i.fas {
 }
 
 #layer {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     background-color: #6731a2;
     transition: 0.9s ease all;
-    z-index: 1;
+    z-index: 10;
 }
 
 #layer.sl {
@@ -128,8 +130,11 @@ button i.fas {
 #layer,
 #init {
     position: fixed;
-    top: 50%;
+    top: 67%;
     margin: -40px auto 0 auto;
+    z-index: 10;
+    width: 80px;
+    cursor: pointer;
 }
 
 #layer {
@@ -140,10 +145,10 @@ button i.fas {
 #init {
     right: 0;
     left: 0;
-    width: 82px;
-    height: 82px;
+    width: 100px;
+    height: 100px;
     cursor: pointer;
-    z-index: 2;
+    z-index: 20;
 }
 
 #app.opened {
@@ -194,16 +199,21 @@ button i.fas {
 }
 
 .button-download {
-    position: absolute;
+    position: absolute !important;
+    font-size: 100px !important;
+    color: #fff !important;
     bottom: 0;
     right: 0;
-    background-color: #007bff;
-    color: #fff;
-    padding: 5px 10px;
+    padding: 20px 20px;
     border: none;
     cursor: pointer;
     z-index: 1;
+    height: 60px;
+    width: 60px;
     /* Asegura que el botón esté por encima de la imagen */
+}
+.button-download:hover {
+    background-color: #6731a2 !important;
 }
 
 .container-image img {
@@ -214,25 +224,48 @@ button i.fas {
 
 #logo-image {
     position: fixed;
-    top: 10%;
+    top: 2%;
     left: 50%;
     transform: translateX(-50%);
     z-index: 999;
     display: block;
     margin: 0 auto;
-    width: 80%;
+    width: 30%;
 }
+
 
 #logo-footer {
     position: fixed;
-    /* Cambia a posición fija para que esté siempre visible */
+    display: block;
     bottom: 0;
     right: 0;
     width: 300px;
-    /* Ajusta el ancho según tus necesidades */
     height: auto;
-    /* Deja que la altura se ajuste automáticamente */
-    z-index: 1000;
+    /* z-index: 1000; */
     margin: 10px;
-    /* Agrega margen para separarla de los bordes */
+    padding-right: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
+
+.image {
+    border-radius: 15px !important;
+}
+
+@media (max-width: 768px) {
+    #app-cover {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    #logo-footer {
+      margin-top: 10px;
+    }
+
+    #logo-image {
+        padding-top: 20px;
+        width: 60%;
+    }
+  }

@@ -17,6 +17,7 @@ export const useImageStore = () => {
     }
 
     const getImage = async (image_id:string) => {
+        if(image_id === null) return '';
         const response  = await coffeApi.get(`/image/photo/${image_id}`, {
             responseType: 'arraybuffer',
         });
