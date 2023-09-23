@@ -202,10 +202,37 @@ button i.fas {
     padding: 5px 10px;
     border: none;
     cursor: pointer;
-    z-index: 1; /* Asegura que el botón esté por encima de la imagen */
+    z-index: 1;
+    /* Asegura que el botón esté por encima de la imagen */
 }
 
 .container-image img {
     max-width: 100%;
-    max-height: 300px; /* Ajusta la altura máxima de la imagen según tus necesidades */
+    max-height: 300px;
+    /* Ajusta la altura máxima de la imagen según tus necesidades */
+}
+
+#logo-image {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+}
+
+#logo-footer {
+    position: fixed;
+    /* Cambia a posición fija para que esté siempre visible */
+    bottom: 0;
+    right: 0;
+    width: 300px;
+    /* Ajusta el ancho según tus necesidades */
+    height: auto;
+    /* Deja que la altura se ajuste automáticamente */
+    z-index: 1000;
+    margin: 10px;
+    /* Agrega margen para separarla de los bordes */
 }
