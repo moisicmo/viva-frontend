@@ -1,4 +1,4 @@
-# Viva - backend
+# Viva - backend test
 
 Leasing system for the VIVA
 This project uses React + Vite with Typescript language
